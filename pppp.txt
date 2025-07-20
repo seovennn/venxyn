@@ -1,21 +1,3 @@
-<?php
-$ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-
-// Ambil info lokasi IP
-$data = @json_decode(file_get_contents("http://ip-api.com/json/$ip?fields=status,countryCode,query"), true);
-
-if (!$data || $data['status'] !== 'success') {
-http_response_code(403);
-exit("Blocked: JANGAN DDOS");
-}
-
-$country = $data['countryCode'] ?? 'XX';
-
-if (!in_array($country, ['ID', 'MY'])) {
-http_response_code(403);
-exit("Access denied ($country)");
-}
-
 <!DOCTYPE HTML>
 <html lang="id-ID" xmlns:wormhole="http://www.w3.org/1999/xhtml">
  <head>
