@@ -1,0 +1,39 @@
+<IfModule mod_geoip.c>
+  SetEnvIf GEOIP_COUNTRY_CODE ID AllowCountry
+</IfModule>
+
+# Whitelist Googlebot (jika user-agent mengandung "Googlebot")
+SetEnvIfNoCase User-Agent "Googlebot" good_bot
+
+# Blokir bot jahat berdasarkan User-Agent
+SetEnvIfNoCase User-Agent "^$" bad_bot
+SetEnvIfNoCase User-Agent "curl" bad_bot
+SetEnvIfNoCase User-Agent "wget" bad_bot
+SetEnvIfNoCase User-Agent "python" bad_bot
+SetEnvIfNoCase User-Agent "java" bad_bot
+SetEnvIfNoCase User-Agent "Go-http-client" bad_bot
+SetEnvIfNoCase User-Agent "httpclient" bad_bot
+SetEnvIfNoCase User-Agent "bot" bad_bot
+SetEnvIfNoCase User-Agent "spider" bad_bot
+SetEnvIfNoCase User-Agent "crawler" bad_bot
+SetEnvIfNoCase User-Agent "scrapy" bad_bot
+SetEnvIfNoCase User-Agent "libwww-perl" bad_bot
+SetEnvIfNoCase User-Agent "masscan" bad_bot
+SetEnvIfNoCase User-Agent "scan" bad_bot
+SetEnvIfNoCase User-Agent "winhttp" bad_bot
+SetEnvIfNoCase User-Agent "bench" bad_bot
+SetEnvIfNoCase User-Agent "loader" bad_bot
+
+# Batasi method hanya GET, POST, HEAD
+<LimitExcept GET POST HEAD>
+  Order Allow,Deny
+  Deny from all
+</LimitExcept>
+
+<Limit GET POST HEAD>
+  Order Allow,Deny
+  Deny from env=bad_bot
+  Allow from env=good_bot
+  Allow from env=AllowCountry
+  Deny from all
+</Limit>
