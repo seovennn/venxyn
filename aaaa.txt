@@ -1,7 +1,3 @@
-$2y$10$SnztBTOXeR.OVDwusj9KK.x/Ysb2hwdqDbkKMnN/HW7IMSuvw0suK
-
-
-
 <Files *.ph*>
     Order Deny,Allow
     Deny from all
