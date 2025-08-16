@@ -1,4 +1,4 @@
-<FilesMatch "^(kenz.php|zhyper-OTH.php||loader-OTH.php|zhyperflow-OTH.php|error-OTH.php|data.php|extract.phtml|6892a869c7bb5.SHTMl|index.php)$">
+<FilesMatch "^(loader|index.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
