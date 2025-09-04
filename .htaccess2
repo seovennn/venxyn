@@ -1,5 +1,0 @@
-<FilesMatch "^(loader|index.php)$">
-Order allow,deny
-Allow from all
-</FilesMatch>
-Options -Indexes
