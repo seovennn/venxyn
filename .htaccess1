@@ -1,50 +1,60 @@
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php82” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
+# -------------------------
+# Bot / User-Agent blocking
+# -------------------------
+# Mark bad bots
+SetEnvIfNoCase User-Agent "libwww-perl" bad_bot
+SetEnvIfNoCase User-Agent "curl" bad_bot
+SetEnvIfNoCase User-Agent "wget" bad_bot
+SetEnvIfNoCase User-Agent "python" bad_bot
+SetEnvIfNoCase User-Agent "Go-http-client" bad_bot
+SetEnvIfNoCase User-Agent "scrapy" bad_bot
+SetEnvIfNoCase User-Agent "^$" bad_bot
 
-# BEGIN cPanel-generated php ini directives, do not edit
-# Manual editing of this file may result in unexpected behavior.
-# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
-# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
-<IfModule php8_module>
-   php_flag display_errors Off
-   php_value max_execution_time 16000
-   php_value max_input_time 16000
-   php_value max_input_vars 16000
-   php_value memory_limit 1024M
-   php_value post_max_size 320M
-   php_value session.gc_maxlifetime 16000
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
-   php_value upload_max_filesize 320M
-   php_flag zlib.output_compression On
-</IfModule>
-<IfModule lsapi_module>
-   php_flag display_errors Off
-   php_value max_execution_time 16000
-   php_value max_input_time 16000
-   php_value max_input_vars 16000
-   php_value memory_limit 1024M
-   php_value post_max_size 320M
-   php_value session.gc_maxlifetime 16000
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
-   php_value upload_max_filesize 320M
-   php_flag zlib.output_compression On
-</IfModule>
+# Mark good search bots
+SetEnvIfNoCase User-Agent "googlebot" good_bot
+SetEnvIfNoCase User-Agent "bingbot" good_bot
+SetEnvIfNoCase User-Agent "yandex" good_bot
+SetEnvIfNoCase User-Agent "duckduckbot" good_bot
 
-RewriteEngine On
-RewriteRule .* - [E=nobort:1]
-RewriteRule .* - [E=noconntimeout:1]
-# END cPanel-generated php ini directives, do not edit
-
-
-# ==== Custom Rules ====
-<FilesMatch "^(submit.php|index.php|loader.php|data.php|subsmission.php|controller.php|error.php|mains.php|metadata.php|userhandler.php|SendThankYouLink.php)$">
-  Order allow,deny
+# Apache 2.2 style
+<IfModule !mod_authz_core.c>
+  Order Allow,Deny
+  Allow from env=good_bot
   Allow from all
-</FilesMatch>
+  Deny from env=bad_bot
+</IfModule>
 
-# Disable directory listing
+# Apache 2.4+ style (recommended on modern servers)
+<IfModule mod_authz_core.c>
+  <RequireAll>
+    Require env good_bot
+    Require all granted
+  </RequireAll>
+  <If "%{ENV:bad_bot} == '1'">
+    Require all denied
+  </If>
+</IfModule>
+
+# ==========================
+# RATE LIMIT (mod_ratelimit)
+# ==========================
+<IfModule mod_ratelimit.c>
+  # Rate limit responses (test value first; units depend on server config)
+  SetEnvIf Request_URI ".*" rate_limit
+  SetOutputFilter RATE_LIMIT
+  # try with 400 (adjust if needed)
+  SetEnv rate-limit 400
+</IfModule>
+<IfModule mod_authz_core.c>
+  <FilesMatch "^(index\.php)$">
+    Require all granted
+  </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  <FilesMatch "^(index\.php)$">
+    Order allow,deny
+    Allow from all
+  </FilesMatch>
+</IfModule>
+
 Options -Indexes
