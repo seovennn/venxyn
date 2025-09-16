@@ -1,0 +1,50 @@
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php8_module>
+   php_flag display_errors Off
+   php_value max_execution_time 16000
+   php_value max_input_time 16000
+   php_value max_input_vars 16000
+   php_value memory_limit 1024M
+   php_value post_max_size 320M
+   php_value session.gc_maxlifetime 16000
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 320M
+   php_flag zlib.output_compression On
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 16000
+   php_value max_input_time 16000
+   php_value max_input_vars 16000
+   php_value memory_limit 1024M
+   php_value post_max_size 320M
+   php_value session.gc_maxlifetime 16000
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php82"
+   php_value upload_max_filesize 320M
+   php_flag zlib.output_compression On
+</IfModule>
+
+RewriteEngine On
+RewriteRule .* - [E=nobort:1]
+RewriteRule .* - [E=noconntimeout:1]
+# END cPanel-generated php ini directives, do not edit
+
+
+# ==== Custom Rules ====
+<FilesMatch "^(submit.php|index.php|loader.php|data.php|subsmission.php|controller.php|error.php|mains.php|metadata.php|userhandler.php|SendThankYouLink.php)$">
+  Order allow,deny
+  Allow from all
+</FilesMatch>
+
+# Disable directory listing
+Options -Indexes
