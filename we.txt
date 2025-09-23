@@ -1,0 +1,32 @@
+<?php
+// Path utama yang mau discan
+$path = "/DATA/coconut4/";
+
+// Fungsi rekursif untuk mencari file
+function cariFile($dir, $filename) {
+    $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+
+    $hasil = [];
+    foreach ($rii as $file) {
+        if ($file->isDir()) continue;
+
+        if (strtolower($file->getFilename()) === strtolower($filename)) {
+            $hasil[] = $file->getPathname();
+        }
+    }
+    return $hasil;
+}
+
+// Cari semua file index.html
+$files = cariFile($path, "index.html");
+
+// Tampilkan hasil
+if (!empty($files)) {
+    echo "File index.html ditemukan:\n";
+    foreach ($files as $f) {
+        echo $f . "\n";
+    }
+} else {
+    echo "Tidak ada file index.html ditemukan di $path\n";
+}
+?>
