@@ -38,4 +38,4 @@
 # -----------------------------------------------
 # Redirect halaman 404 ke domain lain
 # -----------------------------------------------
-ErrorDocument 404 https://example.com
+ErrorDocument 404 https://easj.aliraqia.edu.iq/
