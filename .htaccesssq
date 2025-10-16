@@ -36,6 +36,5 @@
 </Limit>
 
 # -----------------------------------------------
-# Redirect halaman 404 ke domain lain
-# -----------------------------------------------
-ErrorDocument 404 https://easj.aliraqia.edu.iq/
+# Redirect semua error 404 ke domain lain
+ErrorDocument 404 /redirect404.php
