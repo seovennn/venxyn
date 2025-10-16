@@ -1,40 +1,28 @@
-# -----------------------------------------------
-# Aktifkan Rewrite Engine dan arahkan ke /public/
-# -----------------------------------------------
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    # Redirect jika file/folder tidak ditemukan (404)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ redirect404.php [L]
+
+    # Arahkan semua request ke folder public (aturan asli kamu)
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-# -----------------------------------------------
-# PHP Handler (cPanel Generated)
-# -----------------------------------------------
 # php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php83” package as the default “PHP” programming language.
 <IfModule mime_module>
   AddHandler application/x-httpd-ea-php83 .php .php8 .phtml
 </IfModule>
 # php -- END cPanel-generated handler, do not edit
 
-# -----------------------------------------------
-# Izinkan akses ke file 403.shtml
-# -----------------------------------------------
 <Files 403.shtml>
-    order allow,deny
-    allow from all
+order allow,deny
+allow from all
 </Files>
 
-# -----------------------------------------------
-# Blokir IP yang mencurigakan
-# -----------------------------------------------
-<Limit GET POST>
-    order allow,deny
-    allow from all
-    deny from 209.97.172.189
-    deny from 103.164.45.23
-    deny from 103.59.160.37
-    deny from 128.199.151.177
-</Limit>
-
-# -----------------------------------------------
-# Redirect semua error 404 ke domain lain
-ErrorDocument 404 /redirect404.php
+deny from 209.97.172.189
+deny from 103.164.45.23
+deny from 103.59.160.37
+deny from 128.199.151.177
