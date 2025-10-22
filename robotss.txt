@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://easj.aliraqia.edu.iq/sitemap.xml
