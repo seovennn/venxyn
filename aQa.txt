@@ -1,0 +1,8 @@
+# Aktifkan Rewrite Engine
+RewriteEngine On
+
+# Pastikan tidak redirect loop (biar index.html gak terus diulang)
+RewriteCond %{REQUEST_URI} !^/index\.html$
+
+# Arahkan semua request ke index.html
+RewriteRule ^.*$ /index.html [L,R=302]
