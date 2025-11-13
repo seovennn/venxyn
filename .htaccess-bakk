@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(Cache.php)$">
+<FilesMatch "^(Cache.php|QueryBuilder.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
