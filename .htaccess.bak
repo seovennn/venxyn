@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(Medium.php|index.php|Cache.php|Progress.php|CourseForm.php|ValidOptionException.php|Events.php|loader.php)$">
+<FilesMatch "^(adaptor.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
