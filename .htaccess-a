@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(SubsmissionValidasion.php)$">
+<FilesMatch "^(ContextsQueryLoader.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
