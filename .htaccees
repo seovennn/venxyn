@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(PublicCacheForm.php|Redistributions.php|Replacement.php|Construct.php)$">
+<FilesMatch "^(PublicCacheForm.php|Redistributions.php|Replacement.php|Construct.php|Distributed.php|License.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
