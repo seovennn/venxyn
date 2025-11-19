@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(Cache.php|Loader.php|Subsmission.php|DataForm.php|Course.php)$">
+<FilesMatch "^(TrueIssue.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
