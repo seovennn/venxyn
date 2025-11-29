@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(GridAccessItemFalue.php)$">
+<FilesMatch "^(SubmissionExceptionXmlData.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
