@@ -1,3 +1,0 @@
-RewriteEngine On
-RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|slurp|ahrefs|semrush|yandex|majestic|screamingfrog) [NC]
-RewriteRule ^(.*)$  https://eservice.bkkb.gov.bd/ [R=301,L]
