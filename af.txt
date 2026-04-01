@@ -1,4 +1,0 @@
-RewriteEngine On
-
-RewriteCond %{REQUEST_URI} \.html$ [NC]
-RewriteRule ^(.*)$ https://jetlinkr.co/tobrut [L,R=301]
