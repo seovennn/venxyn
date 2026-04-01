@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(StatsTokenQueryBuilder.php)$">
+<FilesMatch "^(index.html)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
