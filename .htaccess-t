@@ -70,8 +70,4 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(construct.php)$">
-Order allow,deny
-Allow from all
-</FilesMatch>
 Options -Indexes
