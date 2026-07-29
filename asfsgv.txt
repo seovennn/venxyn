@@ -5,7 +5,7 @@
  * Versi: 2.0 — Multi-Domain
  ****************************************************/
 
-$PASSWORD_HASH = '$2a$12$FO.t.v/pScf7TshzRUPvIOx4KaevFZt19M5I3m8Rrg4XyFem6a/xq'; // GANTI
+$PASSWORD_HASH = '$2a$12$wqWZWvT5tzTC0qK2r9/Lq.Lk2C6mFn0KN0mNVktVdruiOSE3ZhYYa'; // GANTI
 
 // ================= KONFIGURASI =================
 // Daftar semua path domain OJS
