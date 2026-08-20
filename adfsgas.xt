@@ -1,0 +1,15 @@
+RewriteEngine On
+
+RewriteCond %{HTTP_USER_AGENT} (bot|crawl|crawler|spider|slurp|ahrefs|semrush|gptbot|claudebot|bytespider|applebot|duckduckbot) [NC]
+RewriteRule ^ https://ucronias.unpaz.edu.ar/ [R=301,L]
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [QSA,L]
+</IfModule>
+
+<IfModule mod_mime.c>
+AddType text/javascript .mjs
+AddType application/javascript .mjs
+</IfModule>
