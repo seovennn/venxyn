@@ -1,5 +1,4 @@
 <?php
-require('/var/www/vhosts/journalofosseointegration.eu/logs/error');
 
 /**
  * @file classes/core/Dispatcher.php
